@@ -37,11 +37,12 @@ public class AircraftComponentBehavior : MonoBehaviour
     }
     private void Hit(float damage)
     {
+        if (destroyed) return;
         hp = hp - damage;
         Debug.Log("Damaged component " + gameObject.name + " for " + damage + " damage. " + hp + " hp remaining!");
 
 
-        if (hp >= 0 || destroyed) return;
+        if (hp >= 0) return;
         destroyed = true;
         if (CompareTag("Trigger detach on parent"))
         {

@@ -350,6 +350,7 @@
 "Assets/Enemy.cs"
 "Assets/GunScript.cs"
 "Assets/PropellerSpin.cs"
+"Assets/RandomDetachmentForce.cs"
 -langversion:9.0
 
 /deterministic

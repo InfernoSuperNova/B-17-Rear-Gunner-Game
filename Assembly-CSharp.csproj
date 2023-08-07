@@ -61,6 +61,7 @@
     <Compile Include="Assets\Enemy.cs" />
     <Compile Include="Assets\AircraftComponentBehavior.cs" />
     <Compile Include="Assets\GunScript.cs" />
+    <Compile Include="Assets\RandomDetachmentForce.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -8,12 +8,12 @@ public class GunScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Instantiate(bulletPrefab, transform.position, transform.rotation);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Instantiate(bulletPrefab, transform.position, transform.rotation);
+        
     }
 }
