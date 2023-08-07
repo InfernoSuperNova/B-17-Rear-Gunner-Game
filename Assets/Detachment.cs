@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public static class DetachChildren
+public static class Detachment
 {
     public static void DetachChildrenRecursive(Transform obj)
     {
@@ -16,5 +16,11 @@ public static class DetachChildren
             child.DetachChildren();
             child.AddComponent<Rigidbody>();
         }
+    }
+    public static void DetachSelf(Transform obj)
+    {
+        obj.SetParent(null, true);
+        obj.AddComponent<Rigidbody>();
+        DetachChildrenRecursive(obj);
     }
 }

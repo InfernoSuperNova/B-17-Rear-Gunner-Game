@@ -26,7 +26,6 @@ public class PropellerSpin : MonoBehaviour
         //rotate the propeller
         currentAngle = nextAngle;
         nextAngle = nextAngle + propellerSpeed * Time.fixedDeltaTime;
-        print(nextAngle);
     }
     
     // Update on display frames
