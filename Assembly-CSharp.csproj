@@ -59,7 +59,8 @@
     <Compile Include="Assets\PropellerSpin.cs" />
     <Compile Include="Assets\Detachment.cs" />
     <Compile Include="Assets\Enemy.cs" />
-    <Compile Include="Assets\AircraftComponentBheavior.cs" />
+    <Compile Include="Assets\AircraftComponentBehavior.cs" />
+    <Compile Include="Assets\GunScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
