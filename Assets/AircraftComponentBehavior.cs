@@ -52,7 +52,6 @@ public class AircraftComponentBehavior : MonoBehaviour
         else
         {
             Detachment.DetachChildrenRecursive(transform);
-            Detachment.DetachSelf(transform);
 
         }
     }

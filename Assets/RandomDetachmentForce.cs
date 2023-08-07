@@ -4,8 +4,8 @@ using UnityEngine;
 
 public static class RandomDetachmentForce
 {
-    private static float forceRange = 1000;
-    private static float torqueRange = 20;
+    private static float forceRange = 300;
+    private static float torqueRange = 100;
     public static Vector3 RandomForce()
     {
         return new Vector3(Random.Range(-forceRange, forceRange), Random.Range(-forceRange, forceRange), Random.Range(-forceRange, forceRange));
