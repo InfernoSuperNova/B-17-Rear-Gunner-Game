@@ -29,14 +29,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4484748091269654482}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &4913024884318351098
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72bf1369988cc3a488ab4a3e3c518613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToLive: 5
+  tracerEnabled: 0
   velocity: 500
   accuracyStdDev: 0.01
   bulletDir: {x: 1, y: 0, z: 0}
@@ -183,21 +185,21 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.16759872
-        inSlope: 0
-        outSlope: 0
+        value: 0.40223312
+        inSlope: -0.006999837
+        outSlope: -0.006999837
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 1
       - serializedVersion: 3
-        time: 0.081902266
+        time: 0.36592335
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.09651359
+        outSlope: -0.09651359
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.52505445
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
+
     public float timeToLive = 5.0f;
     public bool tracerEnabled = false;
-    public float velocity = 500.0f; //m/s
+    public float velocity = 800.0f; //m/s
     public float accuracyStdDev = 0.01f;
     public Vector3 bulletDir = Vector3.zero;
     //store the time it was created
