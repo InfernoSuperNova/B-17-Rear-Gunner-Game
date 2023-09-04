@@ -25,21 +25,22 @@ public class AircraftComponentBehavior : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        //check flags of other gameobject
-        if (other.gameObject.CompareTag("Bullet"))
-        {
-            Hit(5);
-        }
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    //check flags of other gameobject
+    //    if (other.gameObject.CompareTag("Bullet"))
+    //    {
+    //        Hit(5);
+    //    }
 
         
-    }
-    private void Hit(float damage)
+    //}
+    public void Hit(float damage)
     {
         if (destroyed) return;
         hp = hp - damage;
-        Debug.Log("Damaged component " + gameObject.name + " for " + damage + " damage. " + hp + " hp remaining!");
+        //Debug.Log("Damaged component " + gameObject.name + " for " + damage + " damage. " + hp + " hp remaining!");
 
 
         if (hp >= 0) return;
