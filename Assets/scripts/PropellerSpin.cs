@@ -36,7 +36,7 @@ public class PropellerSpin : MonoBehaviour
         Quaternion nextAngleTransform = Quaternion.Euler(spinAxis * nextAngle);
         Quaternion change = Quaternion.Lerp(currentAngleTransform, nextAngleTransform, Time.fixedDeltaTime * (float)physicsDelta);
         //apply rotation change
-        transform.rotation = change;
+        transform.localRotation = change;
     }
 
 }
