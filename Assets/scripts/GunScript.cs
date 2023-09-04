@@ -2,21 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Search;
 using UnityEngine;
-
+using FMODUnity;
 public class GunScript : MonoBehaviour
 {
     public float rateOfFire = 600; //rounds per minute
     public int tracerInterval = 3;
     public GameObject bulletPrefab;
     public bool shoot = false;
+    private bool playingAudio = false;
     public int chanceOfSkipTracer = 10;
+    public Material tracer;
+    public GameObject muzzleFlash;
 
     private int currentBullet = 0;
     private float previousBulletShootTime;
     private float bulletInterval;
+
+
+    private StudioEventEmitter eventEmitter;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
+        eventEmitter = GetComponent<StudioEventEmitter>();
         previousBulletShootTime = Time.time;
         bulletInterval = 60.0f / rateOfFire;
     }
@@ -34,6 +44,7 @@ public class GunScript : MonoBehaviour
             //get the script from the bullet
             BulletBehavior bulletBehavior = newBullet.GetComponent<BulletBehavior>();
             bulletBehavior.bulletDir = transform.forward;
+            bulletBehavior.tracer = tracer;
             if (currentBullet % tracerInterval == 0)
             {
                 bulletBehavior.tracerEnabled = true;
@@ -48,6 +59,22 @@ public class GunScript : MonoBehaviour
             }    
             
             previousBulletShootTime = currentTime;
+
+            Instantiate(muzzleFlash, transform.position, transform.rotation);
+        }
+        UpdateSound();
+    }
+    void UpdateSound()
+    {
+        if (shoot && !playingAudio)
+        {
+            playingAudio = true;
+            eventEmitter.Play();
+        }
+        else if (!shoot && playingAudio)
+        {
+            playingAudio = false;
+            eventEmitter.Stop(); 
         }
     }
 }
