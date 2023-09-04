@@ -114,6 +114,7 @@
 -define:ENABLE_TIMELINE
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
+-define:UNITY_POST_PROCESSING_STACK_V2
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.22f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
@@ -322,9 +323,15 @@
 -r:"C:/Program Files/Unity/Hub/Editor/2021.3.22f1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll"
 -r:"C:/Users/willi/OneDrive/Documents/programs/B 17 Rear Gunner Game/Library/PackageCache/com.unity.testtools.codecoverage@1.2.2/lib/ReportGenerator/ReportGeneratorMerged.dll"
 -r:"C:/Users/willi/OneDrive/Documents/programs/B 17 Rear Gunner Game/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/FMODUnity.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/FMODUnityEditor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/FMODUnityResonance.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/FMODUnityResonanceEditor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.EditorCoroutines.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Performance.Profile-Analyzer.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Postprocessing.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Postprocessing.Runtime.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Rider.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.ref.dll"
@@ -345,13 +352,23 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/AircraftComponentBehavior.cs"
-"Assets/BulletBehavior.cs"
-"Assets/Detachment.cs"
-"Assets/Enemy.cs"
-"Assets/GunScript.cs"
-"Assets/PropellerSpin.cs"
-"Assets/RandomDetachmentForce.cs"
+"Assets/scripts/AimController.cs"
+"Assets/scripts/AircraftComponentBehavior.cs"
+"Assets/scripts/BulletBehavior.cs"
+"Assets/scripts/CopyOrientation.cs"
+"Assets/scripts/DeleteAfterFrames.cs"
+"Assets/scripts/Detachment.cs"
+"Assets/scripts/Enemy.cs"
+"Assets/scripts/GunScript.cs"
+"Assets/scripts/PropellerSpin.cs"
+"Assets/scripts/RandomDetachmentForce.cs"
+"Assets/UnityTechnologies/ParticlePack/EffectExamples/Misc Effects/Scripts/SpawnEffect.cs"
+"Assets/UnityTechnologies/ParticlePack/Shared/Ramps/Runtime/RampAsset.cs"
+"Assets/UnityTechnologies/ParticlePack/Shared/Scripts/AdjustTimeScale.cs"
+"Assets/UnityTechnologies/ParticlePack/Shared/Scripts/ProximityActivate.cs"
+"Assets/UnityTechnologies/ParticlePack/Shared/Scripts/SimpleCameraController.cs"
+"Assets/UnityTechnologies/ParticlePack/Shared/Scripts/SimpleCharacterMotor.cs"
+"Assets/UnityTechnologies/ParticlePack/TutorialInfo/Scripts/Readme.cs"
 -langversion:9.0
 
 /deterministic
