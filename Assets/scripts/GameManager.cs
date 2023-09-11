@@ -11,14 +11,45 @@ public class GameManager : MonoBehaviour
     public Enemy Enemy;
     public Canvas mainUI;
     public Camera mainCamera;
+    public GameObject hitMarker;
+    public int hitMarkerAgeFrames;
+    private int hitMarkerAgeCurrent;
     public GameObject enemyMarker;
     public List<Enemy> enemies;
     private Dictionary<Enemy, GameObject> enemyMarkers;
+    public int scoreHit;
+    public int scoreDestroyComponent;
+    public int scoreKillAircraft;
+    //create a volume slider for use in the editor
+
+
+    public int score = 0;
     void Start()
     {
         enemies = new List<Enemy>();
     }
-
+    public void EnemyHit()
+    {
+        hitMarker.SetActive(true);
+        hitMarkerAgeCurrent = hitMarkerAgeFrames;
+        score += scoreHit;
+    }
+    public void EnemyDestroyComponent()
+    {
+        score += scoreDestroyComponent;
+    }
+    public void EnemyKillAircraft()
+    {
+        score += scoreKillAircraft;
+    }
+    private void FixedUpdate()
+    {
+        hitMarkerAgeCurrent--;
+        if (hitMarkerAgeCurrent <= 0)
+        {
+            hitMarker.SetActive(false);
+        }
+    }
     // Update is called once per frame
     void Update()
     {

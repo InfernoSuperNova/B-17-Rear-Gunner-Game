@@ -6,14 +6,16 @@ using UnityEngine;
 public class AircraftComponentBehavior : MonoBehaviour
 {
     public float hp = 5000;
+    public bool enemy;
     private bool destroyed = false;
-
-
+    GameManager GameManager;
+    
     public static GameObject bullet;
     public Enemy optionalTrigger;
     // Start is called before the first frame update
     void Start()
     {
+        GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         //get Enemy from parent
         optionalTrigger = transform.parent.gameObject.GetComponent<Enemy>();
@@ -40,6 +42,11 @@ public class AircraftComponentBehavior : MonoBehaviour
     //}
     public void Hit(float damage)
     {
+        if (enemy)
+        {
+            GameManager.EnemyHit();
+        }
+        
         if (destroyed) return;
         hp = hp - damage;
         //Debug.Log("Damaged component " + gameObject.name + " for " + damage + " damage. " + hp + " hp remaining!");
@@ -47,11 +54,17 @@ public class AircraftComponentBehavior : MonoBehaviour
 
         if (hp >= 0) return;
         destroyed = true;
+        if (enemy)
+        {
+            GameManager.EnemyDestroyComponent();
+        }
         
         Debug.Log("Part " + gameObject.name + " destroyed!");
         if (optionalTrigger != null)
         {
             optionalTrigger.AircraftDestroy();
+
+            
         }
         if (CompareTag("Trigger detach on parent"))
         {
