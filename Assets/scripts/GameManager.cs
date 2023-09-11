@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     public Enemy Enemy;
     [Range(0, 1)]
     public float volume;
+    public float worldChunkSize;
     public Canvas mainUI;
     public Camera mainCamera;
     public GameObject hitMarker;
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
 
 
     public int score = 0;
+
     void Start()
     {
         enemyMarkers = new Dictionary<Enemy, GameObject>();
@@ -117,7 +120,27 @@ public class GameManager : MonoBehaviour
             uiObject.transform.SetParent(mainUI.transform, false);
             enemyMarkers.Add(enemy, uiObject);
         }
-        }
+        if (player.transform.position.z <= -worldChunkSize)
+        {
+            //get a list of every gameobject in the scene
+            var objects = FindObjectsOfType<GameObject>();
+            var newObjects = new List<GameObject>();
+            //we want to make sure the objects aren't children
+            foreach (var obj in objects)
+            {
+                if (obj.transform.parent == null)
+                {
+                    newObjects.Add(obj);
+                }
+            }
+            foreach (var obj in newObjects)
+            {
+                obj.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y, obj.transform.position.z + worldChunkSize);
+            }
 
+            //move the editor camera back as wel
+            var camera = FindObjectOfType<Camera>();
+
+        }
     }
 }
