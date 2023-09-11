@@ -116,7 +116,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &-6486173916166758797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,9 +130,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDamage: 5
-  timeToLive: 50
+  timeToLive: 5
   tracerEnabled: 0
-  velocity: 500
+  velocity: 1100
   accuracyStdDev: 0.01
   bulletDir: {x: 1, y: 0, z: 0}
   tracer: {fileID: 0}
