@@ -8,8 +8,6 @@ public static class Detachment
 {
     public static void DetachChildrenRecursive(Transform obj)
     {
-        Debug.Log(obj.name);
-        Debug.Log(obj.childCount);
         DetachSelf(obj);
 
         //we want to make a new list of the children so that we aren't losing track of items
@@ -45,7 +43,9 @@ public static class Detachment
         var torque = RandomDetachmentForce.RandomTorque();
         rigidbody.AddTorque(torque.x, torque.y, torque.z);
 
-
+        //add destroyaftertime script
+        var deleteAfterFrames = obj.gameObject.AddComponent<DeleteAfterFrames>();
+        deleteAfterFrames.framesToLive = 600;
     }
     public static void DetachParent(Transform obj)
     {
