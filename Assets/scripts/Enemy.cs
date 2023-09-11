@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour
     public float yawI;
     public float yawD;
     public float gunEngageAngle;
+    public float gunEngageDistance;
     public GameObject[] guns;
     public float breakawayDistance;
     public float breakawayPointRadius;
@@ -243,10 +244,13 @@ public class Enemy : MonoBehaviour
 
     private void ShootGuns(Vector3 targetDir)
     {
-        if (!gunsEnabled) { return; }
+        
         float error = Vector3.Dot(transform.forward, targetDir);
-        if (error > gunEngageAngle)
+        
+        float targetDist = Vector3.Distance(transform.position, target.transform.position);
+        if (error > gunEngageAngle && targetDist <= gunEngageDistance)
         {
+            if (!gunsEnabled) { return; }
             if (!currentlyShooting)
             {
                 gunSoundEmitter.Play();
