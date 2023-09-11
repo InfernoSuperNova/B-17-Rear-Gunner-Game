@@ -38,9 +38,43 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "fc4b25e517650e46",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Todo.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "ba8b901ef8ccf689",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Credits.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "2589e8242d76ec54",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.4.5"
+              }
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -167,9 +201,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "82ff21ea41ff3711",
+  "active": "ba8b901ef8ccf689",
   "lastOpenFiles": [
-    "Aircraft notes.md",
-    "Credits.md"
+    "Todo.md",
+    "Mum feedback.md",
+    "Credits.md",
+    "Aircraft notes.md"
   ]
 }
