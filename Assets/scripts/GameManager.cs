@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public int maxEnemies;
     private float enemySpawnTimerCurrent;
     public GameObject player;
+    public GameObject spawnPoint;
     public Enemy Enemy;
     [Range(0, 1)]
     public float volume;
@@ -61,7 +62,8 @@ public class GameManager : MonoBehaviour
         if (enemySpawnTimerCurrent <= 0 && enemies.Count <= maxEnemies)
         {
             enemySpawnTimerCurrent = enemySpawnTimer;
-            var enemy = Instantiate(Enemy, new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), Random.Range(-100, 100)), Quaternion.identity);
+            Vector3 SpawnPoint = new Vector3(spawnPoint.transform.position.x + Random.Range(-100, 100), spawnPoint.transform.position.y + Random.Range(-100, 100), spawnPoint.transform.position.z + Random.Range(-100, 100));
+            var enemy = Instantiate(Enemy, SpawnPoint, spawnPoint.transform.rotation);
             enemies.Add (enemy);
         }
         List<Enemy> list = new List<Enemy>();
