@@ -8,6 +8,8 @@ TagManager:
   - Trigger detach on parent
   - Detachment Parent
   - aircraft
+  - target
+  - BreakawayPoint
   layers:
   - Default
   - TransparentFX
