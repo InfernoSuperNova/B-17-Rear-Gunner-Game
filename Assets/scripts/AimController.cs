@@ -11,7 +11,7 @@ public class AimController : MonoBehaviour
     public float minX;
     public float maxY;
     public float minY;
-    
+    public bool invertFire;
 
     public Transform orientation;
 
@@ -49,7 +49,7 @@ public class AimController : MonoBehaviour
         //orientation.localRotation = Quaternion.Euler (0f, targetY, 0f);
         foreach(var gunScript in gunScripts)
         {
-            gunScript.shoot = Input.GetMouseButton(0);
+            gunScript.shoot = Input.GetMouseButton(0) ^ invertFire;
         }
     }
 }
