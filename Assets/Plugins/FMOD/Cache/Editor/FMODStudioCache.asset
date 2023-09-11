@@ -23,10 +23,59 @@ MonoBehaviour:
   IsStream: 0
   Is3D: 1
   IsOneShot: 0
-  Parameters: []
+  Parameters:
+  - {fileID: 2155896614072502231}
   MinDistance: 0
   MaxDistance: 2000
   Length: 7332
+--- !u!114 &-1830403644085297515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  StudioPath: parameter:/Volume
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 166592763
+    data2: 4229715326
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-1380535091236582348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Enemy_Engine/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 166592763
+    data2: 4229715326
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,12 +94,13 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: -4429495168080101804}
   - {fileID: 1938565139120472634}
-  EditorParameters: []
+  EditorParameters:
+  - {fileID: -1830403644085297515}
   MasterBanks:
   - {fileID: 6478088954194189000}
   StringsBanks:
   - {fileID: 3250848254894238754}
-  cacheTime: 638295919761800756
+  cacheTime: 638300395623361834
   cacheVersion: 131607
 --- !u!114 &1938565139120472634
 MonoBehaviour:
@@ -75,10 +125,35 @@ MonoBehaviour:
   IsStream: 0
   Is3D: 1
   IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 10000
+  Parameters:
+  - {fileID: -1380535091236582348}
+  MinDistance: 0
+  MaxDistance: 5000
   Length: 5000
+--- !u!114 &2155896614072502231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Player_Shoot/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 166592763
+    data2: 4229715326
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &3250848254894238754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,10 +169,10 @@ MonoBehaviour:
   Path: Assets/audio/project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638295919761800756
+  lastModified: 638300395623361834
   FileSizes:
   - Name: Desktop
-    Value: 866
+    Value: 916
   Exists: 1
 --- !u!114 &6478088954194189000
 MonoBehaviour:
@@ -114,8 +189,8 @@ MonoBehaviour:
   Path: Assets/audio/project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638295919761780748
+  lastModified: 638300395623346768
   FileSizes:
   - Name: Desktop
-    Value: 150496
+    Value: 151552
   Exists: 1

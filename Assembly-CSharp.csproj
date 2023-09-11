@@ -104,6 +104,7 @@
     <None Include="Assets\UnityTechnologies\ParticlePack\EffectExamples\Misc Effects\Shaders\Respawn.shader" />
     <None Include="Assets\audio\project\Metadata\Tags.xml" />
     <None Include="Assets\audio\project\Metadata\ProfilerFolder\{3b0c874c-c0bc-4b86-9ebd-229d26f8a35a}.xml" />
+    <None Include="Assets\audio\project\Metadata\ParameterPreset\{fe70f093-4130-4be0-ac65-1b99a15bd371}.xml" />
     <None Include="Assets\UnityTechnologies\ParticlePack\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\audio\project\Metadata\Bank\{c4d36147-1f27-4242-b97c-9b78a1b80327}.xml" />
     <None Include="Assets\UnityTechnologies\ParticlePack\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
