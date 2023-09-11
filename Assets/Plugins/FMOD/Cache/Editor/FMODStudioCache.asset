@@ -24,8 +24,8 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters: []
-  MinDistance: 1
-  MaxDistance: 10000
+  MinDistance: 0
+  MaxDistance: 2000
   Length: 7332
 --- !u!114 &11400000
 MonoBehaviour:
@@ -44,13 +44,41 @@ MonoBehaviour:
   - {fileID: 6478088954194189000}
   EditorEvents:
   - {fileID: -4429495168080101804}
+  - {fileID: 1938565139120472634}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6478088954194189000}
   StringsBanks:
   - {fileID: 3250848254894238754}
-  cacheTime: 638294514630408014
+  cacheTime: 638295919761800756
   cacheVersion: 131607
+--- !u!114 &1938565139120472634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Enemy_Engine
+  m_EditorClassIdentifier: 
+  Path: event:/Enemy_Engine
+  Guid:
+    Data1: -432456885
+    Data2: 1117144640
+    Data3: 471637893
+    Data4: -894748024
+  Banks:
+  - {fileID: 6478088954194189000}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 10000
+  Length: 5000
 --- !u!114 &3250848254894238754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,10 +94,10 @@ MonoBehaviour:
   Path: Assets/audio/project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638294514630408014
+  lastModified: 638295919761800756
   FileSizes:
   - Name: Desktop
-    Value: 762
+    Value: 866
   Exists: 1
 --- !u!114 &6478088954194189000
 MonoBehaviour:
@@ -86,8 +114,8 @@ MonoBehaviour:
   Path: Assets/audio/project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638294514630383304
+  lastModified: 638295919761780748
   FileSizes:
   - Name: Desktop
-    Value: 84448
+    Value: 150496
   Exists: 1
