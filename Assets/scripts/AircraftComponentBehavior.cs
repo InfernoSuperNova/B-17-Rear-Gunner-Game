@@ -10,11 +10,13 @@ public class AircraftComponentBehavior : MonoBehaviour
 
 
     public static GameObject bullet;
+    public Enemy optionalTrigger;
     // Start is called before the first frame update
     void Start()
     {
 
-
+        //get Enemy from parent
+        optionalTrigger = transform.parent.gameObject.GetComponent<Enemy>();
         bullet = Resources.Load<GameObject>("Bullet");
 
     }
@@ -45,6 +47,12 @@ public class AircraftComponentBehavior : MonoBehaviour
 
         if (hp >= 0) return;
         destroyed = true;
+        
+        Debug.Log("Part " + gameObject.name + " destroyed!");
+        if (optionalTrigger != null)
+        {
+            optionalTrigger.AircraftDestroy();
+        }
         if (CompareTag("Trigger detach on parent"))
         {
 
