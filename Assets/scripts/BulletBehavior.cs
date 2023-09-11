@@ -9,6 +9,8 @@ public class BulletBehavior : MonoBehaviour
     public bool tracerEnabled = false;
     public float velocity = 800.0f; //m/s
     public float accuracyStdDev = 0.01f;
+    public GameObject gameManager;
+    private GameManager gameManagerScript;
     public Vector3 bulletDir = Vector3.zero;
     //store the time it was created
     private float creationTime = 0.0f;
