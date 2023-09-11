@@ -35,15 +35,15 @@ public class AimController : MonoBehaviour
 
     void Update()
     {
-        float mouseX = Input.GetAxisRaw ("Mouse X") * sensX * Time.deltaTime;
-        float mouseY = Input.GetAxisRaw ("Mouse Y") * sensY * Time.deltaTime;
+        float mouseX = Input.GetAxisRaw ("Mouse X") * sensX;
+        float mouseY = Input.GetAxisRaw ("Mouse Y") * sensY;
 
         yRotation += mouseX;
 
         xRotation -= mouseY;
         //clamp the rotation
         xRotation = Mathf.Clamp (xRotation, minY, maxY);
-        yRotation = Mathf.Clamp (yRotation, minX, maxX);
+        //yRotation = Mathf.Clamp (yRotation, minX, maxX);
 
         transform.localRotation = Quaternion.Euler (xRotation, yRotation, 0f);
         //orientation.localRotation = Quaternion.Euler (0f, targetY, 0f);
