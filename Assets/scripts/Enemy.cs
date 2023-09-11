@@ -163,18 +163,27 @@ public class Enemy : MonoBehaviour
         pitch.Update(Time.fixedDeltaTime);
         yaw.Update(Time.fixedDeltaTime);
 
-        
+
         float pitchOut = pitch.GetControlOutput();
         float rollOut = roll.GetControlOutput();
         float yawOut = yaw.GetControlOutput();
-        
+
         float clampedRoll = Mathf.Clamp(rollOut, -rollAuthority * speedMultiplier, rollAuthority * speedMultiplier);
         float clampedPitch = Mathf.Clamp(pitchOut, -pitchAuthority * speedMultiplier, pitchAuthority * speedMultiplier);
         float clampedYaw = Mathf.Clamp(yawOut, -yawAuthority * speedMultiplier, yawAuthority * speedMultiplier);
 
         //apply torque
+        try { 
         rb.AddRelativeTorque(new Vector3(clampedPitch, clampedYaw, clampedRoll), ForceMode.Impulse);
+        }
+        catch
+        {
+            UnityEngine.Debug.LogError("One of these was not a number!");
+            UnityEngine.Debug.Log(clampedPitch);
+            UnityEngine.Debug.Log(clampedYaw);
+            UnityEngine.Debug.Log(clampedRoll);
 
+        }
         //engineSound force
         rb.AddForce(transform.forward * power * Time.fixedDeltaTime, ForceMode.Impulse);
 
