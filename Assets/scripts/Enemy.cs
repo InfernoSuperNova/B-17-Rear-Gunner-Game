@@ -98,7 +98,7 @@ public class Enemy : MonoBehaviour
             if (target == null || target.tag == "Player")
             {
                 List<Enemy> enemyList = GameManager.enemies;
-                
+
                 int closestEnemyIndex = -1;
                 float closestEnemyDistance = float.MaxValue;
                 for (int i = 0; i < enemyList.Count; i++)
@@ -140,7 +140,7 @@ public class Enemy : MonoBehaviour
         // Calculate the desired roll and pitch angle changes in radians
 
         float desiredRollAngle = ConvertTo180Range(GetDesiredRollAngle(targetDir));
-        
+
         float desiredPitchAngle = GetDesiredPitchAngle(targetDir);
         float yawAngleChangeDegrees;
         float desiredYawAngle = ConvertTo180Range(GetDesiredYawAngle(targetDir, out yawAngleChangeDegrees));
@@ -155,7 +155,7 @@ public class Enemy : MonoBehaviour
         {
             desiredYawAngle = ConvertTo180Range(transform.rotation.eulerAngles.y);
         }
-        
+
         pitch.SetTargetValue(desiredPitchAngle);
         roll.SetTargetValue(desiredRollAngle);
         yaw.SetTargetValue(desiredYawAngle);
@@ -287,7 +287,7 @@ public class Enemy : MonoBehaviour
     }
     private void SwitchBehavior()
     {
-        UnityEngine.Debug.DrawLine(transform.position, target.transform.position, Color.red);
+        //UnityEngine.Debug.DrawLine(transform.position, target.transform.position, Color.red);
         //we want to go to a random breakaway point if we are close to the target
         if (Vector3.Distance(transform.position, target.transform.position) < breakawayDistance)
         {

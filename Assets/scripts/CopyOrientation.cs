@@ -84,7 +84,7 @@ public class CopyOrientation : MonoBehaviour
             //create a new position for the targeting
             Vector3 targetPosition = targetedEnemy.transform.position + relativeVelocity * (closestEnemyDistance / projectileVelocity);
             //add gravity to the position
-            targetPosition += Physics.gravity * (closestEnemyDistance / projectileVelocity) * (closestEnemyDistance / projectileVelocity);
+            targetPosition -= Physics.gravity * (closestEnemyDistance / projectileVelocity) * (closestEnemyDistance / projectileVelocity) * Time.deltaTime;
 
 
             //get the required azimuth and elevation to point at the enemy
