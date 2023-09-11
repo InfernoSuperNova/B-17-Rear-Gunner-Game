@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     private float enemySpawnTimerCurrent;
     public GameObject player;
     public Enemy Enemy;
+    [Range(0, 1)]
+    public float volume;
     public Canvas mainUI;
     public Camera mainCamera;
     public GameObject hitMarker;
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour
     public int score = 0;
     void Start()
     {
+        enemyMarkers = new Dictionary<Enemy, GameObject>();
+        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("Volume", volume);
         enemies = new List<Enemy>();
     }
     public void EnemyHit()
