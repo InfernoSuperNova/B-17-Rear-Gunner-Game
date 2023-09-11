@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
 using FMODUnity;
 public class GunScript : MonoBehaviour
@@ -13,7 +12,7 @@ public class GunScript : MonoBehaviour
     public int chanceOfSkipTracer = 10;
     public Material tracer;
     public GameObject muzzleFlash;
-
+    public bool useChildAudioEmitter = false;
     private int currentBullet = 0;
     private float previousBulletShootTime;
     private float bulletInterval;
@@ -26,7 +25,10 @@ public class GunScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        eventEmitter = GetComponent<StudioEventEmitter>();
+        if (useChildAudioEmitter)
+        {
+            eventEmitter = GetComponent<StudioEventEmitter>();
+        }
         previousBulletShootTime = Time.time;
         bulletInterval = 60.0f / rateOfFire;
     }
@@ -60,7 +62,9 @@ public class GunScript : MonoBehaviour
             
             previousBulletShootTime = currentTime;
 
-            Instantiate(muzzleFlash, transform.position, transform.rotation);
+            //instantiate as child of gun
+            GameObject flash = Instantiate(muzzleFlash, transform.position, transform.rotation);
+
         }
         UpdateSound();
     }
@@ -69,12 +73,19 @@ public class GunScript : MonoBehaviour
         if (shoot && !playingAudio)
         {
             playingAudio = true;
-            eventEmitter.Play();
+            if (useChildAudioEmitter)
+            {
+                eventEmitter.Play();
+            }
+            
         }
         else if (!shoot && playingAudio)
         {
             playingAudio = false;
-            eventEmitter.Stop(); 
+            if (useChildAudioEmitter)
+            {
+                eventEmitter.Stop();
+            }
         }
     }
 }
