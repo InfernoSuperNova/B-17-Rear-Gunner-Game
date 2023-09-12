@@ -11,14 +11,15 @@ public class AircraftComponentBehavior : MonoBehaviour
     GameManager GameManager;
     
     public static GameObject bullet;
-    public Enemy optionalTrigger;
+    public Aircraft optionalTrigger;
+
     // Start is called before the first frame update
     void Start()
     {
         GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        //get Enemy from parent
-        optionalTrigger = transform.parent.gameObject.GetComponent<Enemy>();
+        //get Aircraft from parent
+        optionalTrigger = transform.parent.gameObject.GetComponent<Aircraft>();
         bullet = Resources.Load<GameObject>("Bullet");
 
     }
@@ -40,9 +41,9 @@ public class AircraftComponentBehavior : MonoBehaviour
 
         
     //}
-    public void Hit(float damage)
+    public void Hit(float damage, bool playerOwned)
     {
-        if (enemy)
+        if (enemy && playerOwned)
         {
             GameManager.EnemyHit();
         }
