@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class CopyOrientation : MonoBehaviour
+public class PlayerGunBall : MonoBehaviour
 {
     public float maxX;
     public float minX;
@@ -60,7 +60,7 @@ public class CopyOrientation : MonoBehaviour
         else
         {
             //Choose the closest enemy
-            List<Enemy> enemyList = GameManager.enemies;
+            List<Aircraft> enemyList = GameManager.enemies;
 
             int closestEnemyIndex = -1;
             float closestEnemyDistance = float.MaxValue;
