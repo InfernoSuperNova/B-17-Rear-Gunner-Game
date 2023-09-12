@@ -1,21 +1,26 @@
-using FMOD;
+
 using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Aircraft : MonoBehaviour
 {
     PIDController pitch;
     PIDController roll;
     PIDController yaw;
     private GameObject target;
     private Rigidbody targetRb;
+    public bool friendly;
     public bool dogfightMode;
     public float power;
     public float pitchAuthority;
     public float yawAuthority;
     public float rollAuthority;
+    public float AuthorityMultiplier;
+    public bool limitBank;
+    public float sideSlipPower;
+    public float maxBankAngle;
     public float yawSwitchThreshold;
     public float dragUp;
     public float dragForward;
@@ -58,8 +63,16 @@ public class Enemy : MonoBehaviour
         //find the target in the scene
         if (!dogfightMode)
         {
-            target = GameObject.Find("Player");
-            targetRb = target.GetComponent<Rigidbody>();
+            if (friendly)
+            {
+                target = GameObject.FindGameObjectWithTag("BombingTarget");
+            }
+            else
+            {
+                target = GetRandomTarget();
+                targetRb = target.GetComponent<Rigidbody>();
+            }
+            
         }
         
         pitch = new PIDController(pitchP, pitchI, pitchD);
@@ -91,13 +104,17 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (friendly)
+        {
+            Debug.DrawLine(transform.position, target.transform.position, Color.red);
+        }
         Vector3 targetDir;
         float speedMultiplier = Vector3.Dot(transform.forward, rb.velocity) * speedControlCoefficient * Time.fixedDeltaTime;
         if (dogfightMode)
         {
             if (target == null || target.tag == "Player")
             {
-                List<Enemy> enemyList = GameManager.enemies;
+                List<Aircraft> enemyList = GameManager.enemies;
 
                 int closestEnemyIndex = -1;
                 float closestEnemyDistance = float.MaxValue;
@@ -118,36 +135,59 @@ public class Enemy : MonoBehaviour
                 }
                 else
                 {
-                    target = GameObject.Find("Player");
+                    target = GetRandomTarget();
                 }
                 targetRb = target.GetComponent<Rigidbody>();
             }
         }
-        //target doesn't have a rigidbody, so we need to calculate its velocity manually
 
+        //do a nullcheck on the target transform position
+        if (target == null || targetRb == null)
+        {
+            if (friendly)
+            {
+                target = GameObject.FindGameObjectWithTag("BombingTarget");
+            }
+            else
+            {
+                target = GetRandomTarget();
+                targetRb = target.GetComponent<Rigidbody>();
+            }
+            
+        }
+        targetDir = target.transform.position - transform.position;
+        if (!friendly)
+        {
+            float projectileVelocity = 1100f;
+            Vector3 relativeVelocity = targetRb.velocity - rb.velocity;
+            //create a new position for the targeting
+            Vector3 targetPosition = target.transform.position + relativeVelocity * (targetDir.magnitude / projectileVelocity);
 
-
-        targetDir = (target.transform.position - transform.position);
-        float projectileVelocity = 1100f;
-        Vector3 relativeVelocity = targetRb.velocity - rb.velocity;
-        //create a new position for the targeting
-        Vector3 targetPosition = target.transform.position + relativeVelocity * (targetDir.magnitude / projectileVelocity);
-
-        // Calculate the vector from the enemy to the target
-        targetDir = (targetPosition - transform.position).normalized;
+            // Calculate the vector from the enemy to the target
+            targetDir = (targetPosition - transform.position).normalized;
+        }
+        
 
 
         // Calculate the desired roll and pitch angle changes in radians
 
-        float desiredRollAngle = ConvertTo180Range(GetDesiredRollAngle(targetDir));
+        
 
         float desiredPitchAngle = GetDesiredPitchAngle(targetDir);
+        
         float yawAngleChangeDegrees;
         float desiredYawAngle = ConvertTo180Range(GetDesiredYawAngle(targetDir, out yawAngleChangeDegrees));
+        float desiredRollAngle = ConvertTo180Range(GetDesiredRollAngle(targetDir));
+        if (limitBank)
+        {
+            desiredRollAngle = Mathf.Clamp(desiredRollAngle, -maxBankAngle, maxBankAngle);
+        }
+
         roll.SetCurrentValue(ConvertTo180Range(transform.rotation.eulerAngles.z));
         pitch.SetCurrentValue(transform.rotation.eulerAngles.x);
         yaw.SetCurrentValue(ConvertTo180Range(transform.rotation.eulerAngles.y));
-        if (Mathf.Abs(yawAngleChangeDegrees) < yawSwitchThreshold && Vector3.Dot(rb.velocity.normalized, targetRb.velocity.normalized) < yawSwitchThreshold)
+
+        if (Mathf.Abs(yawAngleChangeDegrees) < yawSwitchThreshold && (friendly || Vector3.Dot(rb.velocity.normalized, targetRb.velocity.normalized) < yawSwitchThreshold))
         {
             desiredRollAngle = 0;
         }
@@ -156,36 +196,34 @@ public class Enemy : MonoBehaviour
             desiredYawAngle = ConvertTo180Range(transform.rotation.eulerAngles.y);
         }
 
+        
+        //add a world relative force to the aircraft based on the current bank angle
+        //if (maxBankAngle < 90)
+        //{
+        //    rb.AddRelativeTorque(new Vector3(0, -desiredRollAngle * sideSlipPower * Time.fixedDeltaTime, 0), ForceMode.Impulse);
+        //}
+        
         pitch.SetTargetValue(desiredPitchAngle);
-        roll.SetTargetValue(desiredRollAngle);
         yaw.SetTargetValue(desiredYawAngle);
+        roll.SetTargetValue(desiredRollAngle);
 
-        roll.Update(Time.fixedDeltaTime);
         pitch.Update(Time.fixedDeltaTime);
         yaw.Update(Time.fixedDeltaTime);
-
+        roll.Update(Time.fixedDeltaTime);
 
         float pitchOut = pitch.GetControlOutput();
-        float rollOut = roll.GetControlOutput();
         float yawOut = yaw.GetControlOutput();
+        float rollOut = roll.GetControlOutput();
 
-        float clampedRoll = Mathf.Clamp(rollOut, -rollAuthority * speedMultiplier, rollAuthority * speedMultiplier);
+
         float clampedPitch = Mathf.Clamp(pitchOut, -pitchAuthority * speedMultiplier, pitchAuthority * speedMultiplier);
         float clampedYaw = Mathf.Clamp(yawOut, -yawAuthority * speedMultiplier, yawAuthority * speedMultiplier);
+        float clampedRoll = Mathf.Clamp(rollOut, -rollAuthority * speedMultiplier, rollAuthority * speedMultiplier);
 
         //apply torque
-        try { 
-        rb.AddRelativeTorque(new Vector3(clampedPitch, clampedYaw, clampedRoll), ForceMode.Impulse);
-        }
-        catch
-        {
-            UnityEngine.Debug.LogError("One of these was not a number!");
-            UnityEngine.Debug.Log(clampedPitch);
-            UnityEngine.Debug.Log(clampedYaw);
-            UnityEngine.Debug.Log(clampedRoll);
+        rb.AddRelativeTorque(new Vector3(clampedPitch, clampedYaw, clampedRoll) * AuthorityMultiplier, ForceMode.Impulse);
 
-        }
-        //engineSound force
+        //engine force
         rb.AddForce(transform.forward * power * Time.fixedDeltaTime, ForceMode.Impulse);
 
         //calculate drag on all axes
@@ -204,7 +242,6 @@ public class Enemy : MonoBehaviour
         float liftForce = Vector3.Dot(transform.forward, rb.velocity) * liftCoefficient;
         rb.AddForce(liftForce * transform.up * Time.fixedDeltaTime, ForceMode.Impulse);
 
-        //apply a constant force trying to tilt towards gravity
 
         ShootGuns(targetDir);
         if (!dogfightMode)
@@ -216,7 +253,7 @@ public class Enemy : MonoBehaviour
 
     private float GetDesiredRollAngle(Vector3 targetDir)
     {
-        float rollAngleChange = Mathf.Asin(Vector3.Dot(-transform.right, targetDir));
+        float rollAngleChange = Mathf.Asin(Vector3.Dot(-transform.right, targetDir.normalized));
         float rollAngleChangeDegrees = rollAngleChange * Mathf.Rad2Deg;
         float currentRollAngle = transform.rotation.eulerAngles.z;
         float desiredRollAngle = currentRollAngle + rollAngleChangeDegrees;
@@ -224,7 +261,7 @@ public class Enemy : MonoBehaviour
     }
     private float GetDesiredPitchAngle(Vector3 targetDir)
     {
-        float pitchAngleChange = Mathf.Asin(Vector3.Dot(-transform.up, targetDir));
+        float pitchAngleChange = Mathf.Asin(Vector3.Dot(-transform.up, targetDir.normalized));
         float pitchAngleChangeDegrees = pitchAngleChange * Mathf.Rad2Deg;
         float currentPitchAngle = transform.rotation.eulerAngles.x;
         float desiredPitchAngle = currentPitchAngle + pitchAngleChangeDegrees;
@@ -233,7 +270,7 @@ public class Enemy : MonoBehaviour
 
     private float GetDesiredYawAngle(Vector3 targetDir, out float yawAngleChangeDegrees)
     {
-        Vector3 cross = Vector3.Cross(transform.forward, targetDir);
+        Vector3 cross = Vector3.Cross(transform.forward, targetDir.normalized);
         float dot = Vector3.Dot(Vector3.up, cross); // Assuming up is the vertical axis
         float yawAngleChange = Mathf.Asin(dot);
         yawAngleChangeDegrees = yawAngleChange * Mathf.Rad2Deg;
@@ -287,7 +324,6 @@ public class Enemy : MonoBehaviour
     }
     private void SwitchBehavior()
     {
-        //UnityEngine.Debug.DrawLine(transform.position, target.transform.position, Color.red);
         //we want to go to a random breakaway point if we are close to the target
         if (Vector3.Distance(transform.position, target.transform.position) < breakawayDistance)
         {
@@ -296,12 +332,12 @@ public class Enemy : MonoBehaviour
             {
                 Destroy(target);
                 gunsEnabled = true;
-                UnityEngine.Debug.Log("engaging target!");
-                target = GameObject.Find("Player");
+                Debug.Log("engaging target!");
+                target = GetRandomTarget();
                 return;
             }
             gunsEnabled = false;
-            UnityEngine.Debug.Log("Breaking away!");
+            Debug.Log("Breaking away!");
             
             //we want to pick a random breakaway point offset behind the target
             Vector3 targetDir = (target.transform.position - transform.position).normalized;
@@ -323,7 +359,13 @@ public class Enemy : MonoBehaviour
 
     public void AircraftDestroy()
     {
-        UnityEngine.Debug.Log("Destroyed!");
+        Debug.Log("Destroyed!");
+        if (friendly)
+        {
+            Instantiate(destructionEffect, transform.position, transform.rotation);
+            Detachment.DetachChildrenRecursive(transform);
+            return;
+        }
         gunSoundEmitter.Stop();
         engineSoundEmitter.Stop();
         foreach (var gunScript in gunScripts)
@@ -335,6 +377,18 @@ public class Enemy : MonoBehaviour
         }
         //instansiate explosion
         GameObject explosion = Instantiate(destructionEffect, transform.position, transform.rotation);
-        
+        Detachment.DetachChildrenRecursive(transform);
+    }
+    private GameObject GetRandomTarget()
+    {
+        List<GameObject> targets = new List<GameObject>();
+        //get a list of GameObjects with the tag "Target"
+        foreach (GameObject target in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            targets.Add(target);
+        }
+        //get a random target from the list
+        int randomIndex = Random.Range(0, targets.Count);
+        return targets[randomIndex];
     }
 }
