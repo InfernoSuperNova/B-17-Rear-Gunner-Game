@@ -12,7 +12,10 @@ public class GunScript : MonoBehaviour
     public int chanceOfSkipTracer = 10;
     public Material tracer;
     public GameObject muzzleFlash;
+    public GameObject velocityInheritObject;
+    private Rigidbody velocityInheritRB;
     public bool useChildAudioEmitter = false;
+    public bool playerOwned = false;
     private int currentBullet = 0;
     private float previousBulletShootTime;
     private float bulletInterval;
@@ -25,6 +28,7 @@ public class GunScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        velocityInheritRB = velocityInheritObject.GetComponent<Rigidbody>();
         if (useChildAudioEmitter)
         {
             eventEmitter = GetComponent<StudioEventEmitter>();
@@ -43,10 +47,22 @@ public class GunScript : MonoBehaviour
         {
             Quaternion bulletAngleOffset = Quaternion.Euler(90, 0, 0);
             GameObject newBullet = Instantiate(bulletPrefab, transform.position, transform.rotation * bulletAngleOffset);
+            Rigidbody newBulletRB = newBullet.GetComponent<Rigidbody>();
+            //check if velocityInheritRB is null
+            if (velocityInheritRB == null)
+            {
+                newBulletRB.velocity = new Vector3(0, 0, 0);
+            }
+            else
+            {
+                newBulletRB.velocity = velocityInheritRB.velocity;
+            }
+            
             //get the script from the bullet
             BulletBehavior bulletBehavior = newBullet.GetComponent<BulletBehavior>();
             bulletBehavior.bulletDir = transform.forward;
             bulletBehavior.tracer = tracer;
+            bulletBehavior.playerOwned = playerOwned;
             if (currentBullet % tracerInterval == 0)
             {
                 bulletBehavior.tracerEnabled = true;
@@ -64,7 +80,9 @@ public class GunScript : MonoBehaviour
 
             //instantiate as child of gun
             GameObject flash = Instantiate(muzzleFlash, transform.position, transform.rotation);
-
+            //add linearmove script to flash
+            //MoveToObject flashMoveToObject = flash.AddComponent<MoveToObject>();
+            //flashMoveToObject.moveTo = gameObject;
         }
         UpdateSound();
     }
