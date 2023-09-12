@@ -120,27 +120,25 @@ public class GameManager : MonoBehaviour
             uiObject.transform.SetParent(mainUI.transform, false);
             enemyMarkers.Add(enemy, uiObject);
         }
-        if (player.transform.position.z <= -worldChunkSize)
+    }
+    public void ReturnToOrigin()
+    {
+        //Get the location of the player
+        Vector3 playerPos = player.transform.position;
+        //get a list of every gameobject in the scene
+        var objects = FindObjectsOfType<GameObject>();
+        var newObjects = new List<GameObject>();
+        //we want to make sure the objects aren't children
+        foreach (var obj in objects)
         {
-            //get a list of every gameobject in the scene
-            var objects = FindObjectsOfType<GameObject>();
-            var newObjects = new List<GameObject>();
-            //we want to make sure the objects aren't children
-            foreach (var obj in objects)
+            if (obj.transform.parent == null)
             {
-                if (obj.transform.parent == null)
-                {
-                    newObjects.Add(obj);
-                }
+                newObjects.Add(obj);
             }
-            foreach (var obj in newObjects)
-            {
-                obj.transform.position = new Vector3(obj.transform.position.x, obj.transform.position.y, obj.transform.position.z + worldChunkSize);
-            }
-
-            //move the editor camera back as wel
-            var camera = FindObjectOfType<Camera>();
-
+        }
+        foreach (var obj in newObjects)
+        {
+            obj.transform.position = new Vector3(obj.transform.position.x - playerPos.x, obj.transform.position.y - playerPos.y, obj.transform.position.z - playerPos.z);
         }
     }
 }
