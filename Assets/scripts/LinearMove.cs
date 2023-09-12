@@ -14,6 +14,6 @@ public class LinearMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(moveSpeed * Time.fixedDeltaTime);
+        transform.Translate(moveSpeed * Time.deltaTime);
     }
 }
