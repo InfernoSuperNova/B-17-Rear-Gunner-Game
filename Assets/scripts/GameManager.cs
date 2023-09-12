@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
 public class GameManager : MonoBehaviour
@@ -10,31 +12,38 @@ public class GameManager : MonoBehaviour
     private float enemySpawnTimerCurrent;
     public GameObject player;
     public GameObject spawnPoint;
-    public Enemy Enemy;
+    public Aircraft Enemy;
     [Range(0, 1)]
     public float volume;
-    public float worldChunkSize;
     public Canvas mainUI;
     public Camera mainCamera;
     public GameObject hitMarker;
     public int hitMarkerAgeFrames;
     private int hitMarkerAgeCurrent;
     public GameObject enemyMarker;
-    public List<Enemy> enemies;
-    private Dictionary<Enemy, GameObject> enemyMarkers;
+    public Color32 enemyMarkerColour;
+    public float enemyMarkerOpaqueDistance;
+    public float enemyMarkerTransparentDistance;
     public int scoreHit;
     public int scoreDestroyComponent;
     public int scoreKillAircraft;
+    public int score = 0;
+    public GameObject scoreCounter;
+    private TextMeshProUGUI scoreText;
+    
+    public List<Aircraft> enemies;
+    private Dictionary<Aircraft, GameObject> enemyMarkers;
     //create a volume slider for use in the editor
 
 
-    public int score = 0;
+    
 
     void Start()
     {
-        enemyMarkers = new Dictionary<Enemy, GameObject>();
+        scoreText = scoreCounter.GetComponent<TextMeshProUGUI>();
+        enemyMarkers = new Dictionary<Aircraft, GameObject>();
         FMODUnity.RuntimeManager.StudioSystem.setParameterByName("Volume", volume);
-        enemies = new List<Enemy>();
+        enemies = new List<Aircraft>();
     }
     public void EnemyHit()
     {
