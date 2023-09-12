@@ -256,13 +256,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616999457699686325}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.095199965, y: -0.4867813, z: 0}
-  m_LocalScale: {x: 0.20816849, y: 0.79999995, z: 1.0526317}
+  m_LocalPosition: {x: 0.095199965, y: -0.9850393, z: 0}
+  m_LocalScale: {x: 0.9541256, y: 0.80000025, z: 1.0526317}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1616999459140281243}
-  m_Father: {fileID: 1616999458281965409}
-  m_RootOrder: 7
+  m_Father: {fileID: 1616999459075030526}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1616999457699686322
 MeshFilter:
@@ -835,7 +835,6 @@ Transform:
   - {fileID: 1616999457692757291}
   - {fileID: 1616999458728780547}
   - {fileID: 1616999459075030526}
-  - {fileID: 1616999457699686326}
   m_Father: {fileID: 1616999458580660597}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 90}
@@ -1078,11 +1077,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e438292cf5d49e84e90de296f7b4bb06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  friendly: 0
   dogfightMode: 0
   power: 300000
   pitchAuthority: 40
   yawAuthority: 10
   rollAuthority: 600
+  AuthorityMultiplier: 1
+  limitBank: 0
+  sideSlipPower: 0
+  maxBankAngle: 90
   yawSwitchThreshold: 5
   dragUp: 50000
   dragForward: 1000
@@ -1306,7 +1310,9 @@ MonoBehaviour:
   chanceOfSkipTracer: 10
   tracer: {fileID: 2100000, guid: bd06e59fe8d166d4fa72c112bb8e13a4, type: 2}
   muzzleFlash: {fileID: 1337198075554910, guid: 0e5e2aa9250a9d64ca6f15f411edc4ea, type: 3}
+  velocityInheritObject: {fileID: 1616999458580660586}
   useChildAudioEmitter: 0
+  playerOwned: 0
 --- !u!1 &1616999458777021886
 GameObject:
   m_ObjectHideFlags: 0
@@ -1451,7 +1457,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.27186814, z: 0}
   m_LocalScale: {x: 1, y: 0.21817723, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1616999457699686326}
   m_Father: {fileID: 1616999458281965409}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
@@ -1585,6 +1592,7 @@ MonoBehaviour:
   propellerSpeedDescription: (In degrees per second)
   propellerSpeed: 1000
   spinAxis: {x: 1, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &1616999459226243003
 GameObject:
   m_ObjectHideFlags: 0
@@ -1992,7 +2000,9 @@ MonoBehaviour:
   chanceOfSkipTracer: 10
   tracer: {fileID: 2100000, guid: bd06e59fe8d166d4fa72c112bb8e13a4, type: 2}
   muzzleFlash: {fileID: 1337198075554910, guid: 0e5e2aa9250a9d64ca6f15f411edc4ea, type: 3}
+  velocityInheritObject: {fileID: 1616999458580660586}
   useChildAudioEmitter: 0
+  playerOwned: 0
 --- !u!1 &1616999459426334127
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,7 +2054,9 @@ MonoBehaviour:
   chanceOfSkipTracer: 10
   tracer: {fileID: 2100000, guid: bd06e59fe8d166d4fa72c112bb8e13a4, type: 2}
   muzzleFlash: {fileID: 1337198075554910, guid: 0e5e2aa9250a9d64ca6f15f411edc4ea, type: 3}
+  velocityInheritObject: {fileID: 1616999458580660586}
   useChildAudioEmitter: 0
+  playerOwned: 0
 --- !u!1 &1616999459434735342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2209,7 +2221,9 @@ MonoBehaviour:
   chanceOfSkipTracer: 10
   tracer: {fileID: 2100000, guid: bd06e59fe8d166d4fa72c112bb8e13a4, type: 2}
   muzzleFlash: {fileID: 1337198075554910, guid: 0e5e2aa9250a9d64ca6f15f411edc4ea, type: 3}
+  velocityInheritObject: {fileID: 1616999458580660586}
   useChildAudioEmitter: 0
+  playerOwned: 0
 --- !u!1 &1616999459585679928
 GameObject:
   m_ObjectHideFlags: 0

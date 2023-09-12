@@ -66,10 +66,11 @@
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Ramps\Runtime\RampAsset.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\scripts\RandomDetachmentForce.cs" />
-    <Compile Include="Assets\scripts\Enemy.cs" />
+    <Compile Include="Assets\scripts\Aircraft.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Scripts\SimpleCharacterMotor.cs" />
+    <Compile Include="Assets\scripts\FriendlyGunBall.cs" />
     <Compile Include="Assets\scripts\Detachment.cs" />
-    <Compile Include="Assets\scripts\CopyOrientation.cs" />
+    <Compile Include="Assets\scripts\PlayerGunBall.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\Shared\Scripts\AdjustTimeScale.cs" />
     <Compile Include="Assets\scripts\PID.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Assets\scripts\AimController.cs" />
     <Compile Include="Assets\scripts\MoveAtSpeedForce.cs" />
     <Compile Include="Assets\UnityTechnologies\ParticlePack\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
+    <Compile Include="Assets\scripts\MoveToObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\UnityTechnologies\ParticlePack\TextMesh Pro\Shaders\TMPro.cginc" />

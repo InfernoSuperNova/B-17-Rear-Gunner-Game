@@ -134,6 +134,8 @@ MonoBehaviour:
   tracerEnabled: 0
   velocity: 1100
   accuracyStdDev: 0.01
+  playerOwned: 0
+  gameManager: {fileID: 0}
   bulletDir: {x: 1, y: 0, z: 0}
   tracer: {fileID: 0}
   impactEffect: {fileID: 1337198075554910, guid: a71dd8d24763c944c9920c26c95b6b58, type: 3}
@@ -188,15 +190,15 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.40782166
-        inSlope: -1.3600651
-        outSlope: -1.3600651
+        value: 0.7197876
+        inSlope: -1.595521
+        outSlope: -1.595521
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.29985452
+        time: 0.45113015
         value: 0
         inSlope: 0
         outSlope: 0
