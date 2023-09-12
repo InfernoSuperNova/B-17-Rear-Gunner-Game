@@ -25,6 +25,11 @@ public class PIDController
 
     public void SetTargetValue(float target)
     {
+        //make sure target is not nan, or it could contaminate the PID
+        if (float.IsNaN(target))
+        {
+            return;
+        }
         targetValue = target;
     }
 
