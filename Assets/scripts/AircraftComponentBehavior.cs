@@ -54,17 +54,19 @@ public class AircraftComponentBehavior : MonoBehaviour
 
         if (hp >= 0) return;
         destroyed = true;
-        if (enemy)
+        if (enemy && playerOwned)
         {
             GameManager.EnemyDestroyComponent();
         }
         
-        Debug.Log("Part " + gameObject.name + " destroyed!");
         if (optionalTrigger != null)
         {
             optionalTrigger.AircraftDestroy();
 
-            
+            if (enemy && playerOwned)
+            {
+                GameManager.EnemyKillAircraft();
+            }
         }
         if (CompareTag("Trigger detach on parent"))
         {
