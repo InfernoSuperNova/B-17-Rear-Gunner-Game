@@ -9,6 +9,7 @@ public class BulletBehavior : MonoBehaviour
     public bool tracerEnabled = false;
     public float velocity = 800.0f; //m/s
     public float accuracyStdDev = 0.01f;
+    public bool playerOwned = false;
     public GameObject gameManager;
     private GameManager gameManagerScript;
     public Vector3 bulletDir = Vector3.zero;
@@ -63,8 +64,7 @@ public class BulletBehavior : MonoBehaviour
             if (aircraftComponentBehavior != null)
             {
                 Instantiate(impactEffect, hit.point, transform.rotation);
-                Debug.Log("Hit " + hitObject.name);
-                aircraftComponentBehavior.Hit(bulletDamage);
+                aircraftComponentBehavior.Hit(bulletDamage, playerOwned);
             }
 
             Destroy(gameObject);
