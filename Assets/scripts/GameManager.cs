@@ -95,15 +95,23 @@ public class GameManager : MonoBehaviour
             Vector2 canvasPos;
             Vector2 screenPoint = Camera.main.WorldToScreenPoint(offsetPos);
 
-            
+
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(mainUI.GetComponent<RectTransform>(), screenPoint, null, out canvasPos);
-            
+
             if (enemyMarkers.ContainsKey(enemy))
             {
                 enemyMarkers[enemy].transform.localPosition = canvasPos;
-                Vector3 playerToEnemyDirNorm = (enemy.transform.position - player.transform.position).normalized;
+                Vector3 playerToEnemyDist = enemy.transform.position - player.transform.position;
+                Vector3 playerToEnemyDirNorm = playerToEnemyDist.normalized;
                 Vector3 cameraDir = mainCamera.transform.forward;
+                float enemyDistance = playerToEnemyDist.magnitude;
+                //get a float between 0 and 1 based on the current distance, 0 with it at the opaque distance, 1 with it at the transparent distance
+                float alpha = 1 - Mathf.Clamp((enemyDistance - enemyMarkerOpaqueDistance) / (enemyMarkerTransparentDistance - enemyMarkerOpaqueDistance), 0, 1);
+                var textMesh = enemyMarkers[enemy].GetComponent<TextMeshProUGUI>();
+                Color32 colour = enemyMarkerColour;
+                colour.a = (byte)(alpha * 255);
+                textMesh.color = colour;
                 float dot = Vector3.Dot(playerToEnemyDirNorm, cameraDir);
                 if (dot < 0)
                 {
