@@ -32,7 +32,12 @@ public static class Detachment
         Quaternion rotation = obj.rotation;
         Vector3 scale = obj.lossyScale;
         obj.SetParent(null, true);
-        obj.AddComponent<Rigidbody>();
+        //check if it already has a rigidbody
+        if (obj.GetComponent<Rigidbody>() == null)
+        {
+            obj.AddComponent<Rigidbody>();
+        }
+        
         obj.localScale = scale;
         obj.rotation = rotation;
         
