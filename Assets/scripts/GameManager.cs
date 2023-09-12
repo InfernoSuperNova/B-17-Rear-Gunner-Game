@@ -61,15 +61,22 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        scoreText.text = "Score: " + score;
         enemySpawnTimerCurrent -= Time.deltaTime;
-        if (enemySpawnTimerCurrent <= 0 && enemies.Count <= maxEnemies)
+        if (enemySpawnTimerCurrent <= 0 && enemies.Count < maxEnemies)
         {
             enemySpawnTimerCurrent = enemySpawnTimer;
             Vector3 SpawnPoint = new Vector3(spawnPoint.transform.position.x + Random.Range(-100, 100), spawnPoint.transform.position.y + Random.Range(-100, 100), spawnPoint.transform.position.z + Random.Range(-100, 100));
             var enemy = Instantiate(Enemy, SpawnPoint, spawnPoint.transform.rotation);
             enemies.Add (enemy);
         }
-        List<Enemy> list = new List<Enemy>();
+
+        EnemyMarkerManager();
+        ReturnToOrigin();
+    }
+    public void EnemyMarkerManager()
+    {
+        List<Aircraft> list = new List<Aircraft>();
         foreach (var enemy in enemies)
         {
             list.Add(enemy);
