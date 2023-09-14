@@ -55,8 +55,10 @@ public class Aircraft : MonoBehaviour
     bool currentlyShooting = false;
     StudioEventEmitter engineSoundEmitter;
     StudioEventEmitter gunSoundEmitter;
+    StudioEventEmitter destroySoundEmitter;
     public EventReference shootSound;
     public EventReference engineSound;
+    public EventReference destroySound;
     // Start is called before the first frame update
     void Start()
     {
@@ -374,12 +376,17 @@ public class Aircraft : MonoBehaviour
         }
         gunSoundEmitter.Stop();
         engineSoundEmitter.Stop();
+        destroySoundEmitter.Play();
         foreach (var gunScript in gunScripts)
         {
             if (gunScript != null)
             {
                 gunScript.shoot = false;
             }
+        }
+        if (!gunsEnabled)
+        {
+            Destroy(target);
         }
         //instansiate explosion
         GameObject explosion = Instantiate(destructionEffect, transform.position, transform.rotation);
