@@ -81,8 +81,8 @@ public class GunScript : MonoBehaviour
             //instantiate as child of gun
             GameObject flash = Instantiate(muzzleFlash, transform.position, transform.rotation);
             //add linearmove script to flash
-            //MoveToObject flashMoveToObject = flash.AddComponent<MoveToObject>();
-            //flashMoveToObject.moveTo = gameObject;
+            MoveToObject flashMoveToObject = flash.AddComponent<MoveToObject>();
+            flashMoveToObject.moveTo = gameObject;
         }
         UpdateSound();
     }
