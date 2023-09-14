@@ -102,6 +102,9 @@ public class Aircraft : MonoBehaviour
         gunSoundEmitter = gameObject.AddComponent<StudioEventEmitter>();
         gunSoundEmitter.EventReference = shootSound;
 
+        destroySoundEmitter = gameObject.AddComponent<StudioEventEmitter>();
+        destroySoundEmitter.EventReference = destroySound;
+
     }
     // Update is called once per frame
     void Update()
