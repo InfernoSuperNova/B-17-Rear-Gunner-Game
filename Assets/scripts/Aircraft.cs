@@ -51,7 +51,9 @@ public class Aircraft : MonoBehaviour
     private GameManager GameManager;
 
     public GameObject destructionEffect;
-
+    public GameObject leftWing; //There's a hole in your left wing!
+    public GameObject rightWing; //You've got a hole in your right wing!
+    public int missingWingTorqueOverride = 100;
     public float killFloor = -3000;
     bool currentlyShooting = false;
     StudioEventEmitter engineSoundEmitter;
@@ -184,7 +186,6 @@ public class Aircraft : MonoBehaviour
         
 
         float desiredPitchAngle = GetDesiredPitchAngle(targetDir);
-        
         float yawAngleChangeDegrees;
         float desiredYawAngle = ConvertTo180Range(GetDesiredYawAngle(targetDir, out yawAngleChangeDegrees));
         float desiredRollAngle = ConvertTo180Range(GetDesiredRollAngle(targetDir));
@@ -192,6 +193,25 @@ public class Aircraft : MonoBehaviour
         {
             desiredRollAngle = Mathf.Clamp(desiredRollAngle, -maxBankAngle, maxBankAngle);
         }
+        float totalOverride = 0;
+        float pitchDownOverride = 0;
+        if (leftWing == null || leftWing.transform.parent == null)
+        {
+            totalOverride += missingWingTorqueOverride;
+            pitchDownOverride += 1;
+        }
+        if (rightWing == null || rightWing.transform.parent == null)
+        {
+            totalOverride -= missingWingTorqueOverride;
+            pitchDownOverride += 1;
+        }
+        desiredRollAngle += totalOverride;
+
+        Vector3 right = Vector3.Cross(transform.forward, Vector3.down);
+        Vector3 torqueAxis = right;
+
+        float torqueStrength = missingWingTorqueOverride * pitchDownOverride * Time.fixedDeltaTime * 0.01f;
+        rb.AddTorque(torqueAxis * torqueStrength, ForceMode.Impulse);
 
         roll.SetCurrentValue(ConvertTo180Range(transform.rotation.eulerAngles.z));
         pitch.SetCurrentValue(transform.rotation.eulerAngles.x);
@@ -222,6 +242,13 @@ public class Aircraft : MonoBehaviour
         float clampedPitch = Mathf.Clamp(pitchOut, -pitchAuthority * speedMultiplier, pitchAuthority * speedMultiplier);
         float clampedYaw = Mathf.Clamp(yawOut, -yawAuthority * speedMultiplier, yawAuthority * speedMultiplier);
         float clampedRoll = Mathf.Clamp(rollOut, -rollAuthority * speedMultiplier, rollAuthority * speedMultiplier);
+
+        if (torqueStrength > 0)
+        {
+            clampedPitch = 0;
+            clampedRoll = 0;
+            clampedYaw = 0;
+        }
 
         //apply torque
         rb.AddRelativeTorque(new Vector3(clampedPitch, clampedYaw, clampedRoll) * AuthorityMultiplier, ForceMode.Impulse);
