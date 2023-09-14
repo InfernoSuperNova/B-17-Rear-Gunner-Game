@@ -62,16 +62,6 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "2589e8242d76ec54",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.4.5"
-              }
-            }
           }
         ],
         "currentTab": 4
@@ -183,6 +173,16 @@
                 "file": "Credits.md"
               }
             }
+          },
+          {
+            "id": "aa2866eb5c4f68a1",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency"
+              }
+            }
           }
         ]
       }
@@ -204,8 +204,8 @@
   "active": "ba8b901ef8ccf689",
   "lastOpenFiles": [
     "Todo.md",
-    "Mum feedback.md",
     "Credits.md",
+    "Mum feedback.md",
     "Aircraft notes.md"
   ]
 }
