@@ -139,6 +139,13 @@ MonoBehaviour:
   bulletDir: {x: 1, y: 0, z: 0}
   tracer: {fileID: 0}
   impactEffect: {fileID: 1337198075554910, guid: a71dd8d24763c944c9920c26c95b6b58, type: 3}
+  hitSound:
+    Guid:
+      Data1: -697512098
+      Data2: 1177294461
+      Data3: -1839031882
+      Data4: -1496738
+    Path: event:/Bullet_Impact
 --- !u!96 &8889977485970680711
 TrailRenderer:
   serializedVersion: 2
