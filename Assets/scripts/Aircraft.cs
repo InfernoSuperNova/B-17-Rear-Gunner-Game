@@ -12,6 +12,8 @@ public class Aircraft : MonoBehaviour
     private GameObject target;
     private Rigidbody targetRb;
     public bool friendly;
+    public List<GameObject> waypoints; 
+    private int currentWaypoint = 0;
     public bool dogfightMode;
     public float power;
     public float pitchAuthority;
@@ -65,7 +67,7 @@ public class Aircraft : MonoBehaviour
         {
             if (friendly)
             {
-                target = GameObject.FindGameObjectWithTag("BombingTarget");
+                target = waypoints[currentWaypoint];
             }
             else
             {
@@ -146,7 +148,7 @@ public class Aircraft : MonoBehaviour
         {
             if (friendly)
             {
-                target = GameObject.FindGameObjectWithTag("BombingTarget");
+                target = waypoints[currentWaypoint];
             }
             else
             {
@@ -195,13 +197,6 @@ public class Aircraft : MonoBehaviour
         {
             desiredYawAngle = ConvertTo180Range(transform.rotation.eulerAngles.y);
         }
-
-        
-        //add a world relative force to the aircraft based on the current bank angle
-        //if (maxBankAngle < 90)
-        //{
-        //    rb.AddRelativeTorque(new Vector3(0, -desiredRollAngle * sideSlipPower * Time.fixedDeltaTime, 0), ForceMode.Impulse);
-        //}
         
         pitch.SetTargetValue(desiredPitchAngle);
         yaw.SetTargetValue(desiredYawAngle);
@@ -339,6 +334,17 @@ public class Aircraft : MonoBehaviour
             gunsEnabled = false;
             Debug.Log("Breaking away!");
             
+            if (friendly)
+            {
+                //go to next waypoint
+                currentWaypoint++;
+                if (currentWaypoint >= waypoints.Count)
+                {
+                    currentWaypoint = 0;
+                }
+                target = waypoints[currentWaypoint];
+                return;
+            }
             //we want to pick a random breakaway point offset behind the target
             Vector3 targetDir = (target.transform.position - transform.position).normalized;
             Vector3 breakawayPoint = target.transform.position + targetDir * -breakawayDistance;
