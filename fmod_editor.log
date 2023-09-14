@@ -9,7 +9,7 @@
 [LOG] DownMix::init                            : done.
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 000001ED2612BB88 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 0000023B65C2FB98 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
@@ -20,44 +20,10 @@
 [LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
 [LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
 [LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 142080
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 8480
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000E49C0FF258
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF9DE323E90
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF9DE323E50
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF9DE323F70
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF9DE324030
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000001EC9C778B78
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='stoppedshooting', format=5, channels=2, frequency=48000, lengthbytes=24928, lengthpcm=145543, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=1.000000.
-[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
-[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
-[LOG] SystemI::createSoundInternal             : exinfo->length             = 142080
-[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 8480
-[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000E49C0FF258
-[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FF9DE323E90
-[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FF9DE323E50
-[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FF9DE323F70
-[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FF9DE324030
-[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000001EC9C778B78
-[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
-[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
-[LOG] SystemI::createSoundInternal             : Sample 0/1: name='shooting', format=5, channels=2, frequency=48000, lengthbytes=56320, lengthpcm=240000, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=1.000000.
-[LOG] SoundI::release                          :  (000001ED8B12E458)
-[LOG] SoundI::release                          :     stoppedshooting (000001EC9CCBF938)
-[LOG] SoundI::release                          :  (000001ED8B12E8A8)
-[LOG] SoundI::release                          :     shooting (000001EC9CCBFC78)
-[LOG] SoundI::release                          :  (000001ED8F03B088)
-[LOG] SoundI::release                          :     enemy_engine (000001EC9CCBEC38)
+[LOG] SoundI::release                          :  (0000023AA08A32A8)
+[LOG] SoundI::release                          :     friendly_engine (0000023AA11C5D98)
+[LOG] SoundI::release                          :  (0000023AA08A3868)
+[LOG] SoundI::release                          :     enemy_engine (0000023AA11C75F8)
 [LOG] Thread::callback                         : FMOD Studio update thread finished.
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
@@ -68,10 +34,6 @@
 [LOG] Thread::callback                         : FMOD mixer thread finished.
 [LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
 [LOG] SystemI::close                           : Closed.
-[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
-[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
-[LOG] Manager::readBank                        : fileversion = 142, compatVersion = 140 (oldest = 44, newest = 142)
-[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
