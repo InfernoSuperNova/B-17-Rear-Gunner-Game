@@ -20,21 +20,29 @@ public class GameManager : MonoBehaviour
     public GameObject hitMarker;
     public int hitMarkerAgeFrames;
     private int hitMarkerAgeCurrent;
+    public GameObject resultsText;
+    public GameObject crosshair;
     public GameObject enemyMarker;
+    public GameObject scoreCounter;
     public Color32 enemyMarkerColour;
     public float enemyMarkerOpaqueDistance;
     public float enemyMarkerTransparentDistance;
+    public int timeBonus = 10;
+    public int timeMaxScore = 60; //time since level load to get max score
+    public int timeMinScore = 180; //time since level load to get min score
     public int scoreHit;
     public int scoreDestroyComponent;
     public int scoreKillAircraft;
     public int score = 0;
-    public GameObject scoreCounter;
+    public int hits = 0;
+    public int destroyedComponents = 0;
+    public int destroyedAircraft = 0;
     private TextMeshProUGUI scoreText;
     
     public List<Aircraft> enemies;
     private Dictionary<Aircraft, GameObject> enemyMarkers;
     //create a volume slider for use in the editor
-
+    private bool resultsAlreadyCalculated = false;
 
     
 
@@ -72,10 +80,22 @@ public class GameManager : MonoBehaviour
     {
         scoreText.text = "Score: " + score;
         enemySpawnTimerCurrent -= Time.deltaTime;
-        if (enemySpawnTimerCurrent <= 0 && enemies.Count < maxEnemies)
+        if (enemySpawnTimerCurrent <= 0 && enemies.Count < enemyCount && !stopSpawningEnemies)
         {
             enemySpawnTimerCurrent = enemySpawnTimer;
-            Vector3 SpawnPoint = new Vector3(spawnPoint.transform.position.x + Random.Range(-100, 100), spawnPoint.transform.position.y + Random.Range(-100, 100), spawnPoint.transform.position.z + Random.Range(-100, 100));
+            Vector3 spawnPointBack = -spawnPoint.transform.forward;
+            //extending from the spawn point, get a random point within a cone
+            //get a random point on a sphere
+            Vector3 randomPoint = Random.onUnitSphere;
+            while (Vector3.Dot(randomPoint, spawnPointBack) < enemySpawnConeRadius)
+            {
+                randomPoint = Random.onUnitSphere;
+            }
+            Vector3 SpawnPoint = randomPoint * enemySpawnDist + spawnPoint.transform.position;
+            if (SpawnPoint.y < 0)
+            {
+                SpawnPoint.y = 0;
+            }
             var enemy = Instantiate(Enemy, SpawnPoint, spawnPoint.transform.rotation);
             enemies.Add (enemy);
         }
@@ -164,5 +184,31 @@ public class GameManager : MonoBehaviour
         {
             obj.transform.position = new Vector3(obj.transform.position.x - playerPos.x, obj.transform.position.y - playerPos.y, obj.transform.position.z - playerPos.z);
         }
+        
+    }
+    void ShowResultsScreen()
+    {
+        if (resultsAlreadyCalculated)
+        {
+            return;
+        }
+        float timeMul = ((float)Time.timeSinceLevelLoad - timeMaxScore) / (timeMinScore - timeMaxScore);
+        float timeScore = 1 - Mathf.Clamp(timeMul, 0, 1);
+        Debug.Log(timeMul);
+        Debug.Log(timeScore);
+        score += (int)(timeScore * timeBonus);
+        string results = "";
+        results += "Results\n\n";
+        results += "Hits: " + hits + "------------" + hits * scoreHit + "\n";
+        results += "Components Destroyed: " + destroyedComponents + "------------" + destroyedComponents * scoreDestroyComponent + "\n";
+        results += "Aircraft Destroyed: " + destroyedAircraft + "------------" + destroyedAircraft * scoreKillAircraft + "\n";
+        results += "Time bonus: " + (int)(Time.timeSinceLevelLoad) + " seconds------------" + (int)(timeScore * timeBonus) + "\n";
+        results += "Total: " + score;
+        crosshair.SetActive(false);
+        scoreCounter.SetActive(false);
+        resultsText.SetActive(true);
+        resultsText.GetComponent<TextMeshProUGUI>().text = results;
+        
+        resultsAlreadyCalculated = true;
     }
 }
