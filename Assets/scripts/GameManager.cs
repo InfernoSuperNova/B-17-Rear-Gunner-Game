@@ -165,13 +165,14 @@ public class GameManager : MonoBehaviour
             enemyMarkers.Add(enemy, uiObject);
         }
     }
-    public void ReturnToOrigin()
+    void ReturnToOrigin()
     {
         //Get the location of the player
         Vector3 playerPos = player.transform.position;
         //get a list of every gameobject in the scene
         var objects = FindObjectsOfType<GameObject>();
         var newObjects = new List<GameObject>();
+        floorLevel -= playerPos.y;
         //we want to make sure the objects aren't children
         foreach (var obj in objects)
         {
