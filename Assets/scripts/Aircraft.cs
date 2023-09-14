@@ -52,6 +52,7 @@ public class Aircraft : MonoBehaviour
 
     public GameObject destructionEffect;
 
+    public float killFloor = -3000;
     bool currentlyShooting = false;
     StudioEventEmitter engineSoundEmitter;
     StudioEventEmitter gunSoundEmitter;
@@ -108,6 +109,11 @@ public class Aircraft : MonoBehaviour
 
     private void FixedUpdate()
     {
+        killFloor = GameManager.floorLevel;
+        if (transform.position.y < killFloor)
+        {
+            AircraftDestroy();
+        }
         if (friendly)
         {
             Debug.DrawLine(transform.position, target.transform.position, Color.red);
