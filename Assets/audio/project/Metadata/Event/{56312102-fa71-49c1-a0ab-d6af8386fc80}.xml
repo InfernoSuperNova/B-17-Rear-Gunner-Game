@@ -5,7 +5,7 @@
 			<value>Player_Shoot</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{6512e310-853a-45d8-bc51-9d16e53c9fcb}</destination>
@@ -252,8 +252,8 @@
 		<relationship name="effects">
 			<destination>{1c342ebe-a74d-4e89-90ca-de5fdfcea1e5}</destination>
 			<destination>{78d23599-78a2-415e-b53e-c818df025491}</destination>
-			<destination>{6005e96a-9069-4dd4-92c8-a586985a5ebc}</destination>
 			<destination>{2d0c0958-7dc4-4610-8e81-a03f1139e3f4}</destination>
+			<destination>{2ea737c9-a5de-4a2d-89fb-8f754b99c0ed}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{72271537-0f84-4c70-8602-189050823abd}" />
@@ -288,14 +288,6 @@
 			<destination>{83b03241-1197-455e-b9ba-b34b1df58631}</destination>
 		</relationship>
 	</object>
-	<object class="SpatialiserEffect" id="{6005e96a-9069-4dd4-92c8-a586985a5ebc}">
-		<property name="minimumDistance">
-			<value>0</value>
-		</property>
-		<property name="maximumDistance">
-			<value>2000</value>
-		</property>
-	</object>
 	<object class="MultibandEqEffect" id="{2d0c0958-7dc4-4610-8e81-a03f1139e3f4}">
 		<property name="filterTypeA">
 			<value>4</value>
@@ -316,6 +308,14 @@
 			<destination>{605ee27b-3582-493e-8473-58cc810d12c6}</destination>
 			<destination>{bc135737-12a4-4688-8790-2157fb2ad760}</destination>
 		</relationship>
+	</object>
+	<object class="ObjectSpatialiserEffect" id="{2ea737c9-a5de-4a2d-89fb-8f754b99c0ed}">
+		<property name="minimumDistance">
+			<value>0</value>
+		</property>
+		<property name="maximumDistance">
+			<value>2000</value>
+		</property>
 	</object>
 	<object class="MixerBusFader" id="{a7aa142f-8a64-4f65-98d1-9e274900292c}" />
 	<object class="AutomationPoint" id="{916db793-513b-4adf-99a9-f3cb5fe3f5e3}">
