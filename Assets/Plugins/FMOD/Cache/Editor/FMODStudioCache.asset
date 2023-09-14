@@ -1,5 +1,137 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8711587937508001816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Friendly_Engine/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 166592763
+    data2: 4229715326
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-7310336842668258609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Bullet_Impact
+  m_EditorClassIdentifier: 
+  Path: event:/Bullet_Impact
+  Guid:
+    Data1: -697512098
+    Data2: 1177294461
+    Data3: -1839031882
+    Data4: -1496738
+  Banks:
+  - {fileID: 6478088954194189000}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -5388133522290423374}
+  MinDistance: 0
+  MaxDistance: 800
+  Length: 3350
+--- !u!114 &-6584696350916661793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Aircraft_Destruction
+  m_EditorClassIdentifier: 
+  Path: event:/Aircraft_Destruction
+  Guid:
+    Data1: 1963732179
+    Data2: 1269738402
+    Data3: -1163157863
+    Data4: 368294871
+  Banks:
+  - {fileID: 6478088954194189000}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 3081445451239498573}
+  MinDistance: 0
+  MaxDistance: 10000
+  Length: 3350
+--- !u!114 &-5861580996961448547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Friendly_Engine
+  m_EditorClassIdentifier: 
+  Path: event:/Friendly_Engine
+  Guid:
+    Data1: 1386014210
+    Data2: 1083240679
+    Data3: 416151456
+    Data4: -1750863601
+  Banks:
+  - {fileID: 6478088954194189000}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -8711587937508001816}
+  MinDistance: 0
+  MaxDistance: 1800
+  Length: 4000
+--- !u!114 &-5388133522290423374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Bullet_Impact/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 166592763
+    data2: 4229715326
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &-4429495168080101804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,13 +226,16 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: -4429495168080101804}
   - {fileID: 1938565139120472634}
+  - {fileID: -5861580996961448547}
+  - {fileID: -6584696350916661793}
+  - {fileID: -7310336842668258609}
   EditorParameters:
   - {fileID: -1830403644085297515}
   MasterBanks:
   - {fileID: 6478088954194189000}
   StringsBanks:
   - {fileID: 3250848254894238754}
-  cacheTime: 638300395623361834
+  cacheTime: 638302569035827869
   cacheVersion: 131607
 --- !u!114 &1938565139120472634
 MonoBehaviour:
@@ -154,6 +289,30 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
+--- !u!114 &3081445451239498573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Aircraft_Destruction/Volume
+  m_EditorClassIdentifier: 
+  Name: Volume
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 166592763
+    data2: 4229715326
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
 --- !u!114 &3250848254894238754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,10 +328,10 @@ MonoBehaviour:
   Path: Assets/audio/project/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638300395623361834
+  lastModified: 638302569035827869
   FileSizes:
   - Name: Desktop
-    Value: 916
+    Value: 1056
   Exists: 1
 --- !u!114 &6478088954194189000
 MonoBehaviour:
@@ -189,8 +348,8 @@ MonoBehaviour:
   Path: Assets/audio/project/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638300395623346768
+  lastModified: 638302569035807400
   FileSizes:
   - Name: Desktop
-    Value: 151552
+    Value: 467328
   Exists: 1
