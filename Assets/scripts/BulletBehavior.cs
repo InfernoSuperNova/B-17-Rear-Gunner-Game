@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +23,7 @@ public class BulletBehavior : MonoBehaviour
     public GameObject impactEffect;
 
     private Vector3 prevPos;
+    public EventReference hitSound;
 
     // Start is called before the first frame update
     void Start()
@@ -67,7 +70,7 @@ public class BulletBehavior : MonoBehaviour
                 aircraftComponentBehavior.Hit(bulletDamage, playerOwned);
             }
 
-            Destroy(gameObject);
+            //RuntimeManager.PlayOneShotAttached(hitSound, gameObject);
         }
     }
     // Update is called once per frame

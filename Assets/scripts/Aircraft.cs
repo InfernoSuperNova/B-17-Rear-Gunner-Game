@@ -2,6 +2,7 @@
 using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Aircraft : MonoBehaviour
@@ -58,10 +59,8 @@ public class Aircraft : MonoBehaviour
     bool currentlyShooting = false;
     StudioEventEmitter engineSoundEmitter;
     StudioEventEmitter gunSoundEmitter;
-    StudioEventEmitter destroySoundEmitter;
     public EventReference shootSound;
     public EventReference engineSound;
-    public EventReference destroySound;
     // Start is called before the first frame update
     void Start()
     {
@@ -98,12 +97,13 @@ public class Aircraft : MonoBehaviour
         engineSoundEmitter = gameObject.AddComponent<StudioEventEmitter>();
         engineSoundEmitter.EventReference = engineSound;
         engineSoundEmitter.Play();
+        engineSoundEmitter.StopEvent = EmitterGameEvent.ObjectDestroy;
+
             
         gunSoundEmitter = gameObject.AddComponent<StudioEventEmitter>();
         gunSoundEmitter.EventReference = shootSound;
+        gunSoundEmitter.StopEvent = EmitterGameEvent.ObjectDestroy;
 
-        destroySoundEmitter = gameObject.AddComponent<StudioEventEmitter>();
-        destroySoundEmitter.EventReference = destroySound;
 
     }
     // Update is called once per frame
@@ -153,6 +153,11 @@ public class Aircraft : MonoBehaviour
                     target = GetRandomTarget();
                 }
                 targetRb = target.GetComponent<Rigidbody>();
+            }
+            if (Vector3.Distance(transform.position, new Vector3(0, 0, 0)) > 2000)
+            {
+                //set target to player
+                target = GameObject.FindGameObjectWithTag("Player");
             }
         }
 
@@ -403,7 +408,6 @@ public class Aircraft : MonoBehaviour
 
     public void AircraftDestroy()
     {
-        Debug.Log("Destroyed!");
         if (friendly)
         {
             Instantiate(destructionEffect, transform.position, transform.rotation);
@@ -412,7 +416,6 @@ public class Aircraft : MonoBehaviour
         }
         gunSoundEmitter.Stop();
         engineSoundEmitter.Stop();
-        destroySoundEmitter.Play();
         foreach (var gunScript in gunScripts)
         {
             if (gunScript != null)
@@ -427,6 +430,8 @@ public class Aircraft : MonoBehaviour
         //instansiate explosion
         GameObject explosion = Instantiate(destructionEffect, transform.position, transform.rotation);
         Detachment.DetachChildrenRecursive(transform);
+        GameManager.RemoveAircraft(gameObject);
+        Destroy(gameObject);
     }
     private GameObject GetRandomTarget()
     {
