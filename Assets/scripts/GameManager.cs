@@ -4,17 +4,23 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private string levelName;
     public float enemySpawnTimer;
-    public int maxEnemies;
+    public int enemyCount;
+    public bool dogFightMode;
+    public bool mainMenu;
+    public bool respawnEnemiesToMeetCount;
+    public bool drawEnemyMarkers = true;
     private float enemySpawnTimerCurrent;
     public GameObject player;
     public GameObject spawnPoint;
+    public float enemySpawnConeRadius;
+    public float enemySpawnDist;
     public Aircraft Enemy;
-    [Range(0, 1)]
-    public float volume;
     public Canvas mainUI;
     public Camera mainCamera;
     public GameObject hitMarker;
@@ -37,20 +43,26 @@ public class GameManager : MonoBehaviour
     public int hits = 0;
     public int destroyedComponents = 0;
     public int destroyedAircraft = 0;
+    public float floorLevel = -3000;
+    public int gameOverTime = 10;
+    public int timeSinceGameEnded = 0;
+    
     private TextMeshProUGUI scoreText;
     
     public List<Aircraft> enemies;
     private Dictionary<Aircraft, GameObject> enemyMarkers;
-    //create a volume slider for use in the editor
+    private bool stopSpawningEnemies = false;
     private bool resultsAlreadyCalculated = false;
-
     
 
     void Start()
     {
-        scoreText = scoreCounter.GetComponent<TextMeshProUGUI>();
+        levelName = SceneManager.GetActiveScene().name;
+        if (scoreCounter != null)
+        {
+            scoreText = scoreCounter.GetComponent<TextMeshProUGUI>();
+        }
         enemyMarkers = new Dictionary<Aircraft, GameObject>();
-        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("Volume", volume);
         enemies = new List<Aircraft>();
     }
     public void EnemyHit()
@@ -58,52 +70,117 @@ public class GameManager : MonoBehaviour
         hitMarker.SetActive(true);
         hitMarkerAgeCurrent = hitMarkerAgeFrames;
         score += scoreHit;
+        hits++;
     }
     public void EnemyDestroyComponent()
     {
         score += scoreDestroyComponent;
+        destroyedComponents++;
     }
     public void EnemyKillAircraft()
     {
         score += scoreKillAircraft;
+        destroyedAircraft++;
     }
     private void FixedUpdate()
     {
+        if (mainMenu)
+        {
+            return;
+        }
         hitMarkerAgeCurrent--;
         if (hitMarkerAgeCurrent <= 0)
         {
             hitMarker.SetActive(false);
         }
+        if (player == null && !mainMenu)
+        {
+            ShowResultsScreen();
+        }
+        if (resultsAlreadyCalculated || (player == null && !mainMenu))
+        {
+            timeSinceGameEnded++;
+            if (timeSinceGameEnded >= gameOverTime * 60)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                int currentHighScore = PlayerPrefs.GetInt(levelName + "HighScore");
+                if (score > currentHighScore)
+                {
+                    PlayerPrefs.SetInt(levelName + "HighScore", score);
+                }
+                SceneManager.LoadScene("MainMenu");
+
+            }
+        }
     }
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "Score: " + score;
+        if (!mainMenu)
+        {
+            scoreText.text = "Score: " + score;
+        }
+        
         enemySpawnTimerCurrent -= Time.deltaTime;
         if (enemySpawnTimerCurrent <= 0 && enemies.Count < enemyCount && !stopSpawningEnemies)
         {
-            enemySpawnTimerCurrent = enemySpawnTimer;
-            Vector3 spawnPointBack = -spawnPoint.transform.forward;
-            //extending from the spawn point, get a random point within a cone
-            //get a random point on a sphere
-            Vector3 randomPoint = Random.onUnitSphere;
-            while (Vector3.Dot(randomPoint, spawnPointBack) < enemySpawnConeRadius)
+            if (mainMenu)
             {
-                randomPoint = Random.onUnitSphere;
-            }
-            Vector3 SpawnPoint = randomPoint * enemySpawnDist + spawnPoint.transform.position;
-            if (SpawnPoint.y < 0)
-            {
-                SpawnPoint.y = 0;
-            }
-            var enemy = Instantiate(Enemy, SpawnPoint, spawnPoint.transform.rotation);
-            enemies.Add (enemy);
-        }
+                enemySpawnTimerCurrent = enemySpawnTimer;
 
-        EnemyMarkerManager();
+                Vector3 randomPoint = Random.onUnitSphere;
+                Vector3 SpawnPoint = randomPoint * enemySpawnDist;
+                Quaternion randomRotation = Random.rotation;
+                var enemy = Instantiate(Enemy, SpawnPoint, randomRotation);
+                enemy.dogfightMode = dogFightMode;
+                enemies.Add(enemy);
+            }
+            else
+            {
+                enemySpawnTimerCurrent = enemySpawnTimer;
+                Vector3 spawnPointBack = -spawnPoint.transform.forward;
+                //extending from the spawn point, get a random point within a cone
+                //get a random point on a sphere
+                Vector3 randomPoint = Random.onUnitSphere;
+                int tries = 0;
+                while (Vector3.Dot(randomPoint, spawnPointBack) < enemySpawnConeRadius)
+                {
+                    tries++;
+                    randomPoint = Random.onUnitSphere;
+                    if (tries > 100)
+                    {
+                        Debug.LogError("Failed to find a point in the cone");
+                        break;
+                    }
+                }
+                Vector3 SpawnPoint = randomPoint * enemySpawnDist + spawnPoint.transform.position;
+                if (SpawnPoint.y < 0)
+                {
+                    SpawnPoint.y = 0;
+                }
+                var enemy = Instantiate(Enemy, SpawnPoint, spawnPoint.transform.rotation);
+                enemy.dogfightMode = dogFightMode;
+                enemies.Add(enemy);
+            }
+
+            
+        }
+        else if (!respawnEnemiesToMeetCount && enemies.Count == enemyCount)
+        {
+            stopSpawningEnemies = true;
+        }
+        if (enemies.Count == 0 && stopSpawningEnemies)
+        {
+            ShowResultsScreen();
+        }
+        if (drawEnemyMarkers)
+        {
+            EnemyMarkerManager();
+        }
         ReturnToOrigin();
     }
-    public void EnemyMarkerManager()
+    void EnemyMarkerManager()
     {
         List<Aircraft> list = new List<Aircraft>();
         foreach (var enemy in enemies)
@@ -134,7 +211,6 @@ public class GameManager : MonoBehaviour
 
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(mainUI.GetComponent<RectTransform>(), screenPoint, null, out canvasPos);
-
             if (enemyMarkers.ContainsKey(enemy))
             {
                 enemyMarkers[enemy].transform.localPosition = canvasPos;
@@ -157,16 +233,25 @@ public class GameManager : MonoBehaviour
                 {
                     enemyMarkers[enemy].SetActive(true);
                 }
-                continue;
             }
-            GameObject uiObject = Instantiate(enemyMarker, canvasPos, Quaternion.identity);
-
-            uiObject.transform.SetParent(mainUI.transform, false);
-            enemyMarkers.Add(enemy, uiObject);
+            else
+            {
+                GameObject uiObject = Instantiate(enemyMarker, canvasPos, Quaternion.identity);
+                Color32 colour = enemyMarkerColour;
+                colour.a = (byte)(0);
+                uiObject.GetComponent<TextMeshProUGUI>().color = colour;
+                uiObject.transform.SetParent(mainUI.transform, false);
+                enemyMarkers.Add(enemy, uiObject);
+            }
+            
         }
     }
     void ReturnToOrigin()
     {
+        if (mainMenu)
+        {
+            return;
+        }
         //Get the location of the player
         Vector3 playerPos = player.transform.position;
         //get a list of every gameobject in the scene
@@ -211,5 +296,19 @@ public class GameManager : MonoBehaviour
         resultsText.GetComponent<TextMeshProUGUI>().text = results;
         
         resultsAlreadyCalculated = true;
+    }
+    public void RemoveAircraft(GameObject aircraft)
+    {
+        if (enemies.Contains(aircraft.GetComponent<Aircraft>()))
+        {
+            enemies.Remove(aircraft.GetComponent<Aircraft>());
+            if (drawEnemyMarkers)
+            {
+                GameObject enemyMarker = enemyMarkers[aircraft.GetComponent<Aircraft>()];
+                enemyMarkers.Remove(aircraft.GetComponent<Aircraft>());
+                Destroy(enemyMarker);
+            }
+            Destroy(aircraft);
+        }
     }
 }
